@@ -15,8 +15,8 @@ BORDER = pygame.Rect(0, HEIGHT//2 - 5, WIDTH, 5)
 FPS = 60
 CHARWIDTH = 80
 CHARLENGTH = 80
-BULLET_VEL = 15
-MAX_BULLETS = 5
+ATTACK_VEL = 15 
+MAX_ATTACKS = 5 
 VEL = 15
 SASUKE_HIT = pygame.USEREVENT + 1
 NARUTO_HIT = pygame.USEREVENT + 2
@@ -33,7 +33,7 @@ NARUTO_CHAR = pygame.image.load(os.path.join("NarutoChar", "kid_naruto.png"))
 NARUTO_CHAR = pygame.transform.scale(NARUTO_CHAR, (CHARWIDTH, CHARLENGTH))
 
 FINAL_VALLEY = pygame.transform.scale(pygame.image.load(os.path.join("NarutoChar", "final_valley.png")), (WIDTH, HEIGHT))
-def gameWindow(SASUKE, NARUTO, NARUTO_Bullets, SASUKE_Bullets, SASUKEHP, NARUTOHP):
+def gameWindow(SASUKE, NARUTO, NARUTO_Attacks, SASUKE_Attacks, SASUKEHP, NARUTOHP):
     WINDOW.blit(FINAL_VALLEY, (0, 0))
     pygame.draw.rect(WINDOW, BLACK, BORDER)
 
@@ -47,10 +47,10 @@ def gameWindow(SASUKE, NARUTO, NARUTO_Bullets, SASUKE_Bullets, SASUKEHP, NARUTOH
     WINDOW.blit(NARUTO_CHAR, (NARUTO.x, NARUTO.y - 60))
 
 
-    for Bullets in SASUKE_Bullets:
-        pygame.draw.rect(WINDOW, BLUE, Bullets)
-    for Bullets in NARUTO_Bullets:
-        pygame.draw.rect(WINDOW, RED, Bullets)
+    for Attacks in SASUKE_Attacks:
+        pygame.draw.rect(WINDOW, BLUE, Attacks)
+    for Attacks in NARUTO_Attacks:
+        pygame.draw.rect(WINDOW, RED, Attacks)
 
     pygame.display.update()
 
@@ -74,21 +74,21 @@ def sasukeMovement(KeysPressed, SASUKE):
     if KeysPressed[pygame.K_DOWN] and SASUKE.y + 50 + VEL + SASUKE.height < HEIGHT:
         SASUKE.y += VEL
 
-def bulletsFunction(SASUKE_Bullets, NARUTO_Bullets, SASUKE, NARUTO):
-    for Bullet in SASUKE_Bullets:
-        Bullet.y -= BULLET_VEL
-        if NARUTO.colliderect(Bullet):
+def AttacksFunction(SASUKE_Attacks, NARUTO_Attacks, SASUKE, NARUTO):
+    for Attack in SASUKE_Attacks:
+        Attack.y -= ATTACK_VEL
+        if NARUTO.colliderect(Attack):
             pygame.event.post(pygame.event.Event(NARUTO_HIT))
-            SASUKE_Bullets.remove(Bullet)
-        elif Bullet.y <= 0:
-            SASUKE_Bullets.remove(Bullet)
-    for Bullet in NARUTO_Bullets:
-        Bullet.y += BULLET_VEL
-        if SASUKE.colliderect(Bullet):
+            SASUKE_Attacks.remove(Attack)
+        elif Attack.y <= 0:
+            SASUKE_Attacks.remove(Attack)
+    for Attack in NARUTO_Attacks:
+        Attack.y += ATTACK_VEL
+        if SASUKE.colliderect(Attack):
             pygame.event.post(pygame.event.Event(SASUKE_HIT))
-            NARUTO_Bullets.remove(Bullet)
-        elif Bullet.y >= HEIGHT:
-            NARUTO_Bullets.remove(Bullet)
+            NARUTO_Attacks.remove(Attack)
+        elif Attack.y >= HEIGHT:
+            NARUTO_Attacks.remove(Attack)
 
 def winner(text):
     DrawText = WINNERFONT.render(text, 1, FINAL_VALLEYgame)
@@ -100,8 +100,8 @@ def main():
     SASUKE = pygame.Rect(700, 300, CHARWIDTH, CHARLENGTH)
     NARUTO = pygame.Rect(100, 300, CHARWIDTH, CHARLENGTH)
 
-    SASUKE_Bullets = []
-    NARUTO_Bullets = []
+    SASUKE_Attacks = []
+    NARUTO_Attacks = []
     SASUKEHP = 20
     NARUTOHP = 20
 
@@ -115,13 +115,13 @@ def main():
                 Run = False
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN and len(SASUKE_Bullets) < MAX_BULLETS:
-                    Bullet = pygame.Rect(SASUKE.x + SASUKE.width / 2, SASUKE.y + 50, 8, 18)
-                    SASUKE_Bullets.append(Bullet)
+                if event.key == pygame.K_RETURN and len(SASUKE_Attacks) < MAX_ATTACKS:
+                    Attack = pygame.Rect(SASUKE.x + SASUKE.width / 2, SASUKE.y + 50, 8, 18)
+                    SASUKE_Attacks.append(Attack)
                     CHIDORI_SOUND.play()
-                if event.key == pygame.K_SPACE and len(NARUTO_Bullets) < MAX_BULLETS:
-                    Bullet = pygame.Rect(NARUTO.x + NARUTO.width / 2, NARUTO.y, 8, 18)
-                    NARUTO_Bullets.append(Bullet)
+                if event.key == pygame.K_SPACE and len(NARUTO_Attacks) < MAX_ATTACKS:
+                    Attack = pygame.Rect(NARUTO.x + NARUTO.width / 2, NARUTO.y, 8, 18)
+                    NARUTO_Attacks.append(Attack)
                     RASENGAN_SOUND.play()
             if event.type == SASUKE_HIT:
                 SASUKEHP -= 1
@@ -130,11 +130,11 @@ def main():
                 NARUTOHP -= 1
                 HIT_SOUND.play()
 
-        bulletsFunction(SASUKE_Bullets, NARUTO_Bullets, SASUKE, NARUTO)
+        AttacksFunction(SASUKE_Attacks, NARUTO_Attacks, SASUKE, NARUTO)
         KeysPressed = pygame.key.get_pressed()
         narutoMovement(KeysPressed, NARUTO)
         sasukeMovement(KeysPressed, SASUKE)
-        gameWindow(SASUKE, NARUTO, NARUTO_Bullets, SASUKE_Bullets, SASUKEHP, NARUTOHP)
+        gameWindow(SASUKE, NARUTO, NARUTO_Attacks, SASUKE_Attacks, SASUKEHP, NARUTOHP)
         
         winnerMessage = ""
         if SASUKEHP <= 0:
