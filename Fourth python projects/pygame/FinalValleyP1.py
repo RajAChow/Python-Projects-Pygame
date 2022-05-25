@@ -16,7 +16,7 @@ BORDER = pygame.Rect(0, HEIGHT/2 - 5, WIDTH, 5)
 FPS = 60
 CHARWIDTH = 80
 CHARLENGTH = 80
-NARUTO_ATTACK_VELOCITY = 12
+NARUTO_ATTACK_VELOCITY = 13
 SASUKE_ATTACK_VELOCITY = 17
 MAX_ATTACKS = 5 
 VEL = 15
@@ -124,7 +124,7 @@ def main():
                     SASUKE_Attacks.append(Attack)
                     CHIDORI_SOUND.play()
                 if event.key == pygame.K_SPACE and len(NARUTO_Attacks) < MAX_ATTACKS:
-                    Attack = pygame.draw.circle(WINDOW, BLUE, (NARUTO.x + NARUTO.width / 2, NARUTO.y + 63), 11)
+                    Attack = pygame.draw.circle(WINDOW, BLUE, (NARUTO.x + NARUTO.width / 2, NARUTO.y + 63), 12)
                     NARUTO_Attacks.append(Attack)
                     RASENGAN_SOUND.play()
                     
@@ -152,6 +152,6 @@ def main():
         
     pygame.quit()
 
-    
+
 if __name__ == "__main__":
     main()
