@@ -3,6 +3,7 @@ import os
 pygame.font.init()
 pygame.mixer.init()
 
+
 WIDTH, HEIGHT = 1150, 670
 WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Final Valley Battle")
@@ -33,6 +34,7 @@ SASUKE_CHAR = pygame.transform.scale(SASUKE_CHAR, (CHARWIDTH, CHARLENGTH))
 NARUTO_CHAR = pygame.image.load(os.path.join("NarutoChar", "kid_naruto.png"))
 NARUTO_CHAR = pygame.transform.scale(NARUTO_CHAR, (CHARWIDTH, CHARLENGTH))
 FINAL_VALLEY = pygame.transform.scale(pygame.image.load(os.path.join("NarutoChar", "final_valley.png")), (WIDTH, HEIGHT))
+
 
 def gameWindow(SASUKE, NARUTO, NARUTO_Attacks, SASUKE_Attacks, SASUKEHP, NARUTOHP):
     WINDOW.blit(FINAL_VALLEY, (0, 0))
