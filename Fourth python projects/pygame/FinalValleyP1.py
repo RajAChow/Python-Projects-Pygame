@@ -18,6 +18,7 @@ CHARLENGTH = 80
 ATTACK_VEL = 15 
 MAX_ATTACKS = 5 
 VEL = 15
+
 SASUKE_HIT = pygame.USEREVENT + 1
 NARUTO_HIT = pygame.USEREVENT + 2
 HEALTHFONT = pygame.font.SysFont("impact", 40)
@@ -31,8 +32,8 @@ SASUKE_CHAR = pygame.image.load(os.path.join("NarutoChar", "kid_sasuke.png"))
 SASUKE_CHAR = pygame.transform.scale(SASUKE_CHAR, (CHARWIDTH, CHARLENGTH))
 NARUTO_CHAR = pygame.image.load(os.path.join("NarutoChar", "kid_naruto.png"))
 NARUTO_CHAR = pygame.transform.scale(NARUTO_CHAR, (CHARWIDTH, CHARLENGTH))
-
 FINAL_VALLEY = pygame.transform.scale(pygame.image.load(os.path.join("NarutoChar", "final_valley.png")), (WIDTH, HEIGHT))
+
 def gameWindow(SASUKE, NARUTO, NARUTO_Attacks, SASUKE_Attacks, SASUKEHP, NARUTOHP):
     WINDOW.blit(FINAL_VALLEY, (0, 0))
     pygame.draw.rect(WINDOW, BLACK, BORDER)
@@ -45,7 +46,6 @@ def gameWindow(SASUKE, NARUTO, NARUTO_Attacks, SASUKE_Attacks, SASUKEHP, NARUTOH
 
     WINDOW.blit(SASUKE_CHAR, (SASUKE.x, SASUKE.y + 50))
     WINDOW.blit(NARUTO_CHAR, (NARUTO.x, NARUTO.y - 60))
-
 
     for Attacks in SASUKE_Attacks:
         pygame.draw.rect(WINDOW, BLUE, Attacks)
@@ -102,6 +102,7 @@ def main():
 
     SASUKE_Attacks = []
     NARUTO_Attacks = []
+    
     SASUKEHP = 20
     NARUTOHP = 20
 
@@ -123,6 +124,7 @@ def main():
                     Attack = pygame.Rect(NARUTO.x + NARUTO.width / 2, NARUTO.y, 8, 18)
                     NARUTO_Attacks.append(Attack)
                     RASENGAN_SOUND.play()
+                    
             if event.type == SASUKE_HIT:
                 SASUKEHP -= 1
                 HIT_SOUND.play()
