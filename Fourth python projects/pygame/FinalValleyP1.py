@@ -124,7 +124,7 @@ def main():
                     SASUKE_Attacks.append(Attack)
                     CHIDORI_SOUND.play()
                 if event.key == pygame.K_SPACE and len(NARUTO_Attacks) < MAX_ATTACKS:
-                    Attack = pygame.draw.circle(WINDOW, BLUE, (NARUTO.x + NARUTO.width / 2, NARUTO.y + 63), 12)
+                    Attack = pygame.draw.circle(WINDOW, BLUE, (NARUTO.x + NARUTO.width / 2, NARUTO.y + 63), 11)
                     NARUTO_Attacks.append(Attack)
                     RASENGAN_SOUND.play()
                     
